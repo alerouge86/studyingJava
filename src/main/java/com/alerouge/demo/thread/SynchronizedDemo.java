@@ -2,27 +2,48 @@ package com.alerouge.demo.thread;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 public class SynchronizedDemo {
 
-    public static void main(String[] args) throws InterruptedException {
-        SynchronizedDemo demo = new SynchronizedDemo();
-        System.out.println("initial: " + demo.getValue());
+    public static void main(String[] args)  {
         Instant start = Instant.now();
-        // duration (ms): 1449
-        long loops = 1_000_000_000L;
+        /**
+         * =========================================================================================================================================================
+         * =========================================================================================================================================================
+         * =========================================================================================================================================================
+         */
+
+        Calculator calculator = new Calculator();
+        IntStream.range(0, 1_000_000_000)
+                .forEach( count -> calculator.calculate());
 
 
-
-
-
-
-
+        /**
+         * =========================================================================================================================================================
+         * =========================================================================================================================================================
+         * =========================================================================================================================================================
+         */
         Instant end = Instant.now();
         long durationMs = Duration.between(start, end).toMillis();
-        System.out.println("final: " + demo.getValue() + " duration (ms): " + durationMs);
+        System.out.println("final: " + calculator.getSum() + " duration (ms): " + durationMs);
+//        System.out.println("final: duration (ms): " + durationMs);
     }
 
 }
 
+class Calculator {
+    private int sum;
+
+    public synchronized void calculate() {
+        setSum(getSum() + 1);
+    }
+
+    public int getSum() {
+        return sum;
+    }
+    public void setSum(int sum) {
+        this.sum = sum;
+    }
+}
