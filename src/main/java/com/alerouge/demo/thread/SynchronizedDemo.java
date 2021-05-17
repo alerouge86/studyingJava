@@ -33,6 +33,9 @@ public class SynchronizedDemo {
 
 }
 
+/**
+ * Added comment for git...
+ */
 class Calculator {
     private int sum;
 
